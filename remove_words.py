@@ -5,6 +5,11 @@ from nltk.corpus import wordnet as wn
 from utils import clean_str, loadWord2Vec
 import sys
 
+
+'''
+主要是將data/corpus中的dataset進行資料cleaning以及大於一定字頻以及刪除停用字，之後產生一個dataset clean 版本
+'''
+
 if len(sys.argv) != 2:
 	sys.exit("Use: python remove_words.py <dataset>")
 
@@ -24,6 +29,8 @@ print(stop_words)
 # word_embeddings_dim = len(embd[0])
 # dataset = '20ng'
 
+
+## 打開 data set 然後 把doc 加入 doc content list 裡面
 doc_content_list = []
 f = open('data/corpus/' + dataset + '.txt', 'rb')
 # f = open('data/wiki_long_abstracts_en_text.txt', 'r')
@@ -31,11 +38,11 @@ for line in f.readlines():
     doc_content_list.append(line.strip().decode('latin1'))
 f.close()
 
-
+# 算字頻率
 word_freq = {}  # to remove rare words
 
 for doc_content in doc_content_list:
-    temp = clean_str(doc_content)
+    temp = clean_str(doc_content) ## Tokenization/string cleaning for all(from util)
     words = temp.split()
     for word in words:
         if word in word_freq:
@@ -43,9 +50,11 @@ for doc_content in doc_content_list:
         else:
             word_freq[word] = 1
 
+
+# 如果字頻大於等於5 才加入 doc words 最後 在加入  clean docs
 clean_docs = []
 for doc_content in doc_content_list:
-    temp = clean_str(doc_content)
+    temp = clean_str(doc_content)  ## Tokenization/string cleaning for all(from util)
     words = temp.split()
     doc_words = []
     for word in words:
@@ -62,16 +71,22 @@ for doc_content in doc_content_list:
 
 clean_corpus_str = '\n'.join(clean_docs)
 
+# create a file to clean 
+
 f = open('data/corpus/' + dataset + '.clean.txt', 'w')
 #f = open('data/wiki_long_abstracts_en_text.clean.txt', 'w')
 f.write(clean_corpus_str)
 f.close()
 
+
+# initial lens
 #dataset = '20ng'
 min_len = 10000
 aver_len = 0
 max_len = 0 
 
+
+# count corpus len 
 f = open('data/corpus/' + dataset + '.clean.txt', 'r')
 #f = open('data/wiki_long_abstracts_en_text.txt', 'r')
 lines = f.readlines()

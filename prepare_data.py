@@ -1,10 +1,25 @@
 #!/usr/bin/python
 #-*-coding:utf-8-*-
+import pandas as pd
+import numpy as np
 
-dataset_name = 'own'
-sentences = ['Would you like a plain sweater or something else?​', 'Great. We have some very nice wool slacks over here. Would you like to take a look?']
-labels = ['Yes' , 'No' ]
-train_or_test_list = ['train', 'test']
+data = pd.read_csv("bbc-text.csv")
+
+dataset_name = 'bcc'
+sentences = data.text.tolist()
+labels = data.category.tolist()
+train_or_test_list = []
+rand = np.random.randint(2,size=2225).tolist()
+for i in rand:
+    if i == 1:
+        train_or_test_list.append('train')
+    else:
+        train_or_test_list.append('test')
+
+# dataset_name = 'own'
+# sentences = ['Would you like a plain sweater or something else?​', 'Great. We have some very nice wool slacks over here. Would you like to take a look?']
+# labels = ['Yes' , 'No' ]
+# train_or_test_list = ['train', 'test']
 
 
 meta_data_list = []

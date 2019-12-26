@@ -36,6 +36,8 @@ doc_name_list = []
 doc_train_list = []
 doc_test_list = []
 
+
+## 將資料切成 test 跟 train
 f = open('data/' + dataset + '.txt', 'r')
 lines = f.readlines()
 for line in lines:
@@ -49,6 +51,8 @@ f.close()
 # print(doc_train_list)
 # print(doc_test_list)
 
+
+## 載入透過remove_words後產生的clean corpus進行作業
 doc_content_list = []
 f = open('data/corpus/' + dataset + '.clean.txt', 'r')
 lines = f.readlines()
@@ -57,6 +61,8 @@ for line in lines:
 f.close()
 # print(doc_content_list)
 
+
+# train 的index 建立以及 shuffle資料
 train_ids = []
 for train_name in doc_train_list:
     train_id = doc_name_list.index(train_name)
@@ -72,6 +78,8 @@ f = open('data/' + dataset + '.train.index', 'w')
 f.write(train_ids_str)
 f.close()
 
+
+#test 的index 建立以及 shuffle資料
 test_ids = []
 for test_name in doc_test_list:
     test_id = doc_name_list.index(test_name)
@@ -88,6 +96,8 @@ ids = train_ids + test_ids
 print(ids)
 print(len(ids))
 
+
+## 把全部（test and train）的shuffle資料放在一起
 shuffle_doc_name_list = []
 shuffle_doc_words_list = []
 for id in ids:
@@ -104,7 +114,7 @@ f = open('data/corpus/' + dataset + '_shuffle.txt', 'w')
 f.write(shuffle_doc_words_str)
 f.close()
 
-# build vocab
+# build vocab  建立字典
 word_freq = {}
 word_set = set()
 for doc_words in shuffle_doc_words_list:
