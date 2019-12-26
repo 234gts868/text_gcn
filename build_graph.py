@@ -15,7 +15,7 @@ from scipy.spatial.distance import cosine
 if len(sys.argv) != 2:
 	sys.exit("Use: python build_graph.py <dataset>")
 
-datasets = ['20ng', 'R8', 'R52', 'ohsumed', 'mr']
+datasets = ['20ng', 'R8', 'R52', 'ohsumed', 'mr','bcc']
 # build corpus
 dataset = sys.argv[1]
 
@@ -130,16 +130,16 @@ vocab = list(word_set)
 vocab_size = len(vocab)
 
 word_doc_list = {}
-
-for i in range(len(shuffle_doc_words_list)):
+#這部份再做
+for i in range(len(shuffle_doc_words_list)): #corpus ,i 代表文章 index
     doc_words = shuffle_doc_words_list[i]
     words = doc_words.split()
     appeared = set()
-    for word in words:
-        if word in appeared:
+    for word in words: # 文章 word 代表字
+        if word in appeared: #出現的第一個字
             continue
-        if word in word_doc_list:
-            doc_list = word_doc_list[word]
+        if word in word_doc_list:#
+            doc_list = word_doc_list[word] # 所以裡面有一個dict and index
             doc_list.append(i)
             word_doc_list[word] = doc_list
         else:
