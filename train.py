@@ -2,8 +2,9 @@ from __future__ import division
 from __future__ import print_function
 
 import time
-import tensorflow as tf
-
+# import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from sklearn import metrics
 from utils import *
 from models import GCN, MLP
@@ -14,7 +15,7 @@ import sys
 if len(sys.argv) != 2:
 	sys.exit("Use: python train.py <dataset>")
 
-datasets = ['20ng', 'R8', 'R52', 'ohsumed', 'mr']
+datasets = ['20ng', 'R8', 'R52', 'ohsumed', 'mr','bcc']
 dataset = sys.argv[1]
 
 if dataset not in datasets:
